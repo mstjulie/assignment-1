@@ -1,31 +1,25 @@
-Blog 2: Type Narrowing in TypeScript 
+ # Type Narrowing in TypeScript 
 
-১. ভূমিকা 
-TypeScript-এ Type Narrowing একটি গুরুত্বপূর্ণ বিষয় । এর মাধ্যমে কোনো variable-এর type আরও নির্দিষ্ট করা যাই । Type Narrowing ব্যবহার করে আমরা নিরাপদে সেই data নিয়ে কাজ করতে পারি এবং code-এর error কমাতে পারি।
+## ১. ভূমিকা 
+TypeScript-এ Type Narrowing একটি গুরুত্বপূর্ণ বিষয় । এর মাধ্যমে কোনো variable-এর type আরও নির্দিষ্ট করা যায় । Type Narrowing ব্যবহার করে আমরা নিরাপদে সেই data নিয়ে কাজ করতে পারি এবং code-এর error কমাতে পারি।
 
-২. Type Narrowing কী?
+## ২. Type Narrowing কী?
 Type Narrowing এর মাধ্যমে TypeScript কোনো variable-এর সম্ভাব্য type কমিয়ে আরও নির্দিষ্ট type বুঝতে পারে । 
 
-উদাহরণ:
-function processInput(value: string | number) {
+## ৩. Type Narrowing-এর কিছু পদ্ধতি
+
+### typeof ব্যবহার
+``` ts 
+function formatValue(value: string | number): string {
   if (typeof value === "string") {
     return value.toUpperCase();
   }
-
-  return value * 10;
+  return value.toFixed(2);
 }
+```
 
-৩. Type Narrowing-এর কিছু পদ্ধতি
-
-# typeof ব্যবহার
-function processInput(value: string | number): string | number {
-  if (typeof value === "string") {
-    return value.toUpperCase();
-  }
-  return value * 10;
-}
-
-# instanceof ব্যবহার
+### instanceof ব্যবহার
+```ts 
 function getDate(value: Date | string) {
   if (value instanceof Date) {
     return value.toDateString();
@@ -33,8 +27,26 @@ function getDate(value: Date | string) {
 
   return value;
 }
+```
 
-৪. Type Narrowing কেন গুরুত্বপূর্ণ?
+### in operator 
+```ts 
+interface Dog {
+  bark: () => string;
+}
+interface Cat {
+  meow: () => string;
+}
+
+function makeSound(pet: Dog | Cat): string {
+  if ("bark" in pet) {
+    return pet.bark();
+  }
+  return pet.meow();
+}
+```
+
+৪.Type Narrowing কেন গুরুত্বপূর্ণ?
 Type Narrowing ব্যবহার করলে
 
 Code-এর error কমানো যায়।
